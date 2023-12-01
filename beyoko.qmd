@@ -1,9 +1,10 @@
 ---
 title: "Beyoko"
+author: "Grace Beyoko"
 format: html
 ---
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 here::i_am("galatic_empire.Rproj")
 library(here)
 library(vroom)
@@ -15,3 +16,94 @@ library(tidyr)
 library(knitr)
 ```
 
+## Question 2
+
+[Here](https://github.com/GraceBeyoko/galatic_empire.git) is the link to my github repository.
+
+## Question 3
+
+```{r}
+planet <- vroom(here("data","Data_planets.csv"),
+                locale = locale(decimal_mark = ","),
+                na= "xx")
+```
+
+```{r}
+
+```
+
+## Question 4
+
+```{r}
+nb_observation <- 
+  nrow(planet)
+
+nb_variable <-
+  ncol(planet)
+
+na_key <-
+  planet |>
+  filter(is.na(planet_key)) |> nrow()
+            
+na_planet <-
+  planet |>
+  filter(is.na(PLANET)) |> nrow()
+
+na_star_idx <- planet |> 
+  filter(is.na(Star_idx)) |> nrow()
+
+na_mass <- 
+  planet |> 
+  filter(is.na(Mass)) |> nrow() 
+
+na_density <- planet |>
+  filter(is.na(Density)) |> nrow()
+
+na_radius <- planet |> 
+  filter(is.na(`Relative Radius`)) |> nrow()
+  
+na_terrain <- planet |> 
+  filter(is.na(type_terrain)) |> nrow()
+
+na_climate <- planet |> 
+  filter(is.na(`type of climate`)) |> nrow()
+
+na_obs <- 
+   planet |>
+   mutate(across(everything(), is.na)) |>
+   rowwise() |>
+   summarise(na_var = any(c_across(everything()))) |>
+   summarise(sum(na_var))
+```
+
+| nb_obsv            | nb_var          | na_key     | na_mass     | na_planet     | na_radius     | na_star_idx     | na_terrain     | na_climate     | na_density     | number of row with NA |
+|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+| `r nb_observation` | `r nb_variable` | `r na_key` | `r na_mass` | `r na_planet` | `r na_radius` | `r na_star_idx` | `r na_terrain` | `r na_climate` | `r na_density` | `r na_obs`            |
+
+## Question 5
+
+```{r}
+planet |>
+  filter(!is.na(Mass)) |>
+  ggplot(aes(x=Density, y=Mass)) + geom_col()
+```
+
+## Question 6
+
+```{r}
+planet |>
+  slice_min(Density) |>
+   select(PLANET, Density)
+
+planet |>
+  slice_min(Star_idx) |>
+   select(PLANET, Star_idx)
+
+planet |>
+  slice_min(Mass) |>
+   select(PLANET, Mass)
+
+planet |>
+  slice_min(`Relative Radius`) |>
+   select(PLANET, `Relative Radius`)
+```
