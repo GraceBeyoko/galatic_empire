@@ -1,0 +1,17 @@
+---
+title: "Beyoko"
+format: html
+---
+
+```{r}
+here::i_am("galatic_empire.Rproj")
+library(here)
+library(vroom)
+library(stringr)
+library(readr)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(knitr)
+```
+
