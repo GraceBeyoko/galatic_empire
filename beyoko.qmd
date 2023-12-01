@@ -28,10 +28,9 @@ planet <- vroom(here("data","Data_planets.csv"),
                 na= "xx")
 ```
 
+
+
 ```{r}
-
-```
-
 ## Question 4
 
 ```{r}
